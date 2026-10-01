@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=$HOME/blog.nepeu.eu/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R docs/. $DEPLOYPATH
