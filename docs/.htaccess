@@ -1,0 +1,7 @@
+# Don't show folder contents when there is no index.html
+Options -Indexes
+
+# Don't serve server config files to visitors
+<Files "php.ini">
+  Require all denied
+</Files>
