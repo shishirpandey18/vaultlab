@@ -13,6 +13,4 @@ I realised I knew the theory but needed practice explaining and troubleshooting 
 - `experiments/` small labs (networking, crypto, security)
 - `docs/notes/` topic notes
 - `docs/troubleshooting/` incident write-ups
-- `docs/troubleshooting/` incident write-ups
-- `docs/` blog website (posts in `docs/posts/`)
 - `docs/` blog website (posts in `docs/posts/`)
