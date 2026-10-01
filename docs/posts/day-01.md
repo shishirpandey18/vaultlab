@@ -81,9 +81,9 @@ Nothing was reaching the Dell. So I checked step by step:
 1. **Are both machines in the same network?**
    - Mac: `ipconfig getifaddr en0` → `192.168.178.51`
    - Ubuntu: `hostname -I` → `192.168.178.52`
-   - Both are `192.168.178.x`, so yes. ✅
-2. **Is the SSH server running?** `systemctl status ssh` → `active (running)` ✅
-3. **Is the Wi-Fi connected?** `nmcli device status` → `connected` ✅
+   - Both are `192.168.178.x`, so yes. 
+2. **Is the SSH server running?** `systemctl status ssh` → `active (running)` 
+3. **Is the Wi-Fi connected?** `nmcli device status` → `connected` 
 
 Everything said it was fine, and I got confused about what was going wrong. While thinking, my eye went to the Wi-Fi signal icon on Ubuntu, and it was showing a **?**. That means the connection was in a bad state. I turned the Wi-Fi off and reconnected it, tried everything again, and it worked.
 
