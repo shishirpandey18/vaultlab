@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="color-scheme" content="dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VaultLab Learning Journal</title>
+  <meta name="description" content="30 days of building, breaking and fixing a password manager and an Ubuntu home lab.">
+  <link rel="stylesheet" href="assets/style.css?v=5">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">vaultlab<span class="cursor">_</span></a>
+    <nav>
+      <a href="index.html">Journal</a>
+      <a href="about.html">About</a>
+      <a id="repo-link" href="https://github.com/shishirpandey18/vaultlab">Code</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Learning journal</p>
+      <h1>30 days of building, breaking and fixing.</h1>
+      <p class="lede">I am building a password manager and an Ubuntu home server to become a better support engineer. Every day I write down what I built, what broke, how I investigated it, and what I learned.</p>
+
+      <div class="progress" aria-live="polite">
+        <div class="progress-label"><span id="progress-text">Loading…</span><span>30 days</span></div>
+        <div class="progress-bar"><div id="progress-fill"></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="list-head">
+        <h2>Daily posts</h2>
+        <input id="search" type="search" placeholder="Search posts or tags…" aria-label="Search posts">
+      </div>
+      <ol id="post-list" class="timeline"></ol>
+      <p id="status" class="status" hidden></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">Written by hand, one day at a time.</footer>
+
+  <script src="assets/config.js?v=5"></script>
+  <script src="assets/app.js?v=5"></script>
+  <script>Blog.renderIndex();</script>
+</body>
+</html>

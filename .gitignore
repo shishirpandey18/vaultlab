@@ -12,3 +12,4 @@ coverage/
 # system and logs
 .DS_Store
 *.log
+private-notes/

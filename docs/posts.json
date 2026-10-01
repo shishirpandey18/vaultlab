@@ -1,0 +1,16 @@
+[
+  {
+    "day": 1,
+    "date": "2026-10-01",
+    "title": "Setup, Linux basics and Git",
+    "summary": "First day: set up my Ubuntu server, hit three different SSH errors and fixed them, learned how Linux groups really work, and resolved my first Git merge conflict.",
+    "tags": [
+      "linux",
+      "ssh",
+      "networking",
+      "permissions",
+      "git"
+    ],
+    "file": "posts/day-01.md"
+  }
+]

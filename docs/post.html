@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="color-scheme" content="dark">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post · VaultLab Learning Journal</title>
+  <link rel="stylesheet" href="assets/style.css?v=5">
+  <link rel="stylesheet" href="assets/vendor/hl-dark.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="prompt">$</span> vaultlab<span class="cursor">_</span></a>
+    <nav>
+      <a href="index.html">Journal</a>
+      <a href="about.html">About</a>
+      <a id="repo-link" href="https://github.com/shishirpandey18/vaultlab">Code</a>
+    </nav>
+  </header>
+
+  <main class="wrap reading">
+    <a class="back" href="index.html">← All posts</a>
+    <div id="post-meta" class="post-meta"></div>
+    <article id="post" class="prose"><p class="status">Loading post…</p></article>
+    <nav id="pager" class="pager"></nav>
+  </main>
+
+  <footer class="site-footer">Written by hand, one day at a time.</footer>
+
+  <!-- Libraries are stored in this repo, not loaded from a CDN -->
+  <script src="assets/vendor/marked.min.js"></script>
+  <script src="assets/vendor/purify.min.js"></script>
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="assets/config.js?v=5"></script>
+  <script src="assets/app.js?v=5"></script>
+  <script>Blog.renderPost();</script>
+</body>
+</html>
