@@ -14,3 +14,4 @@ I realised I knew the theory but needed practice explaining and troubleshooting 
 - `docs/notes/` topic notes
 - `docs/troubleshooting/` incident write-ups
 - `docs/` blog website (posts in `docs/posts/`)
+- `docs/` blog website (posts in `docs/posts/`)
