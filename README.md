@@ -1,4 +1,4 @@
-# VaultLab
+# VaultLab ( 30 -day project)
 
 A basic password manager I am building over 30 days as a hands-on project to learn and apply JavaScript, React, Node.js, Express, PostgreSQL, HTTP/HTTPS, TLS, networking, Linux administration, and security.
 
