@@ -1,0 +1,11 @@
+{
+  "name": "passgen",
+  "version": "1.0.0",
+  "description": "Secure password generator for the command line",
+  "main": "passgen.js",
+  "scripts": {
+    "start": "node passgen.js",
+    "test": "node --test"
+  },
+  "license": "MIT"
+}
