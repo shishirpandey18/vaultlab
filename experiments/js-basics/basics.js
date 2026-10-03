@@ -48,3 +48,17 @@ const titles= vault.map((item)=> item.title);
 const weak= vault.filter((item)=>isWeak(item.password)).map((item)=>item.title);
 const totalLength=  vault.reduce((sum, item) => sum+item.password.length, 0);
 console.log(titles, weak, totalLength);
+
+console.log("--- 7. objects destructuring, spread ---");
+const {title, username} = vault[0];
+const updated = { ...vault[0], password: "new-very-long-password"};
+const title2 = vault[1].title;
+console.log(title, username, title2, vault[0].password === updated.password);
+
+console.log("--- 8. optional chaining and ?? ---");
+const item = {title : "Bank"};
+console.log(item.login?.username);
+console.log(item.login?.username ?? "(no username)");
+
+console.log("--- 9. template strings ---");
+console.log(`${vault.length} items, ${weak.length} weak: ${weak.join(",")}`);
