@@ -23,7 +23,7 @@ Then I installed and started the SSH server on Ubuntu so I can control the Dell 
 
 **What is SSH?** SSH (Secure Shell) is a cryptographic network protocol that lets you securely connect to and control a remote computer over an unsecured network like the internet.
 
-## Problem 1: "Permission denied"
+## Lesson Learned: Fixing "Permission denied"
 
 My first try from the Mac:
 
@@ -51,7 +51,7 @@ The log also showed `from 192.168.178.51`, which is my Mac. So the log tells you
 
 Something else I noticed: the same log also had my own `sudo grep` commands in it, with time, user and folder. So Linux also records what the admin does.
 
-## Problem 2: "Operation timed out"
+## Lesson Learned: Fixing "Operation timed out"
 
 So I tried again with the correct username, and got a different error:
 
@@ -93,7 +93,7 @@ Everything said it was fine, and I got confused about what was going wrong. Whil
 - A tool saying "connected" does not prove the traffic is really flowing. Ping is a real test.
 - The ping messages `No route to host` and `Host is down` were already a clue: my Mac could not even find the Dell on the Wi-Fi. Next time, I will also try `ping 192.168.178.1` (my router) from the Dell to check if the Dell's own connection works.
 
-## Problem 3 (my experiment): stopping SSH
+## Lesson Learned: Experimenting with Stopping SSH
 
 I found something interesting that I didn't know. I stopped the SSH server on Ubuntu while I was still connected from my Mac:
 
@@ -122,7 +122,7 @@ I understood the reason later: SSH has one main process that waits for new conne
 
 I got all three today without planning to.
 
-## Problem 4: Linux permissions and groups
+## Lesson Learned: Understanding Linux Permissions and Groups
 
 I made a file in `/srv/day1-lab` that only the group `vaultteam` could read, and tested it with a `testuser`.
 
@@ -137,7 +137,7 @@ This was caused because **a login session keeps the group list it had when it st
 
 Next time I can check it faster with `id` inside the session and `id testuser` from the admin tab. If they show different groups, the session is old.
 
-## Problem 5: Git merge conflict
+## Lesson Learned: Resolving a Git Merge Conflict
 
 In Git I learned that if we make changes in the same place from different branches, commit both, and then try to merge, a conflict will occur. Then we have to resolve it manually, and then commit and push.
 
@@ -149,7 +149,7 @@ git diff b174f0a 3e7d2d8 -- README.md
 
 So after resolving a conflict, I should check the whole file, not only the lines with the conflict markers.
 
-## Problem 6: my push was rejected
+## Lesson Learned: Fixing a Rejected Git Push
 
 I edited the README directly on GitHub, then changed it on my Mac and tried to push. Git rejected it because GitHub had a change my Mac didn't have. `git pull` merged both changes, and then `git push` worked.
 
