@@ -12,5 +12,18 @@
       "git"
     ],
     "file": "posts/day-01.md"
+  },
+  {
+    "day": 2,
+    "date": "2026-10-02",
+    "title": "JavaScript core, Node.js and a password generator",
+    "summary": "Learned the JavaScript basics properly, set up Node.js, and built a secure password generator with tests that I saw both pass and fail. This one took me two days.",
+    "tags": [
+      "javascript",
+      "node",
+      "crypto",
+      "testing"
+    ],
+    "file": "posts/day-02.md"
   }
 ]
