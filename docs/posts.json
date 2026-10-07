@@ -25,5 +25,18 @@
       "testing"
     ],
     "file": "posts/day-02.md"
+  },
+  {
+    "day": 3,
+    "date": "2026-10-07",
+    "title": "Async JavaScript and debugging",
+    "summary": "Learned how the event loop decides the order of code, why Promise.all is faster, how to read a stack trace, and how to pause a program with breakpoints in VS Code and Chrome DevTools.",
+    "tags": [
+      "javascript",
+      "async",
+      "debugging",
+      "node"
+    ],
+    "file": "posts/day-03.md"
   }
 ]
