@@ -38,5 +38,18 @@
       "node"
     ],
     "file": "posts/day-03.md"
+  },
+  {
+    "day": 4,
+    "date": "2026-10-08",
+    "title": "Ports, TCP and sockets",
+    "summary": "Built a TCP echo server on my Ubuntu machine, watched the three-way handshake with tcpdump, scanned ports with nmap, and learned why 'connection refused' and 'timed out' point to different problems.",
+    "tags": [
+      "networking",
+      "ports",
+      "tcp",
+      "linux"
+    ],
+    "file": "posts/day-04.md"
   }
 ]
