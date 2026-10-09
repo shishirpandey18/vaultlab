@@ -51,5 +51,19 @@
       "linux"
     ],
     "file": "posts/day-04.md"
+  },
+  {
+    "day": 5,
+    "date": "2026-10-09",
+    "title": "DNS and HTTP from first principles",
+    "summary": "Traced my own domain from the root servers, built an HTTP server with no framework on my Ubuntu machine, typed HTTP requests by hand, and broke every step of loading a page to learn which error message belongs to which step.",
+    "tags": [
+      "networking",
+      "dns",
+      "http",
+      "node",
+      "troubleshooting"
+    ],
+    "file": "posts/day-05.md"
   }
 ]
