@@ -16,6 +16,10 @@ function showStatus(text, kind) {
 async function getJson(url, options) {
   console.log(`-> ${options?.method || "GET"} ${url}`);
   const res = await fetch(url, options);
+  const type = res.headers.get("content-type") || "";
+  if (!type.includes("application/json")) {
+    throw new Error(`${res.status} ${res.statusText}: expected JSON but got ${type || "nothing"}`);
+  }
   const body = await res.json();
   if (!res.ok) {
     console.warn(`<- ${res.status} ${res.statusText} from ${url}`, body);
@@ -29,7 +33,7 @@ function renderItems(items) {
   list.innerHTML = "";
   for (const item of items) {
     const li = document.createElement("li");
-    li.textContent = `${item.title} (${item.username})`;
+    li.textContent = `${item.title} (${item.username ?? "no username"})`;
     list.appendChild(li);
   }
 }
@@ -47,7 +51,7 @@ document.getElementById("load-items").addEventListener("click", async () => {
 
 // 2. BUG: item 3 has no username, and this code doesn't expect that
 function showDetails(item) {
-  const name = item.username.toUpperCase();
+  const name = item.username ? item.username.toUpperCase() : "(no username)";
   showStatus(`${item.title}: ${name}`, "ok");
 }
 
@@ -76,8 +80,12 @@ document.getElementById("server-error").addEventListener("click", async () => {
 
 // 5. BUG: expects JSON, gets HTML, and nothing catches the error
 document.getElementById("not-json").addEventListener("click", async () => {
-  const data = await getJson("/api/not-json");
-  showStatus(JSON.stringify(data), "ok");
+  try {
+    const data = await getJson("/api/not-json");
+    showStatus(JSON.stringify(data), "ok");
+  } catch (err) {
+    showStatus(`Unexpected answer: ${err.message}`, "error");
+  }
 });
 
 // 6. Slow, but works
