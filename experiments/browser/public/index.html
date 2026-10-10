@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>VaultLab DevTools lab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>VaultLab DevTools lab</h1>
+  <p>Each button causes a different problem. Open DevTools first (Cmd + Option + I).</p>
+
+  <section>
+    <h2>Requests</h2>
+    <button id="load-items">1. Load items</button>
+    <button id="show-details">2. Show details of item 3</button>
+    <button id="wrong-url">3. Load from a wrong URL</button>
+    <button id="server-error">4. Server error</button>
+    <button id="not-json">5. Not JSON</button>
+    <button id="slow">6. Slow request</button>
+    <button id="other-server">7. Other server (CORS)</button>
+    <button id="crash">8. Crash the server</button>
+  </section>
+
+  <section>
+    <h2>Log in (demo account)</h2>
+    <form id="login-form">
+      <input id="username" placeholder="username" autocomplete="off">
+      <input id="password" type="password" placeholder="password">
+      <button type="submit">Log in</button>
+    </form>
+  </section>
+
+  <p id="status">Ready.</p>
+  <ul id="items"></ul>
+
+  <script src="app.js"></script>
+</body>
+</html>

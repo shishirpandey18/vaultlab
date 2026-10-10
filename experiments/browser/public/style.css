@@ -1,0 +1,6 @@
+body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+button { margin: 0.25rem 0.25rem 0.25rem 0; padding: 0.4rem 0.7rem; cursor: pointer; }
+input { padding: 0.4rem; margin-right: 0.25rem; }
+#status { padding: 0.6rem; background: #f2f2f2; border-radius: 6px; }
+#status.error { background: #fde8e8; color: #9b1c1c; }
+#status.ok { background: #e7f6ec; color: #1e6b3a; }
