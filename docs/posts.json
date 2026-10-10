@@ -65,5 +65,19 @@
       "troubleshooting"
     ],
     "file": "posts/day-05.md"
+  },
+  {
+    "day": 6,
+    "date": "2026-10-10",
+    "title": "Debugging from the browser with DevTools",
+    "summary": "Built a page with bugs on purpose and found each one from Chrome DevTools: uncaught errors in the Console, failed requests in the Network tab, a CORS block, a crashed server, and why 'Failed to fetch' alone tells you nothing.",
+    "tags": [
+      "debugging",
+      "devtools",
+      "javascript",
+      "http",
+      "troubleshooting"
+    ],
+    "file": "posts/day-06.md"
   }
 ]
