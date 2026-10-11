@@ -79,5 +79,18 @@
       "troubleshooting"
     ],
     "file": "posts/day-06.md"
+  },
+  {
+    "day": 7,
+    "date": "2026-10-11",
+    "title": "React fundamentals, VaultLab's first front end",
+    "summary": "Started VaultLab's real front end with React and Vite: components, props, state and loading data through a proxy. Then broke it in eight ways, including a white screen and a key bug that revealed the wrong password.",
+    "tags": [
+      "react",
+      "javascript",
+      "vite",
+      "debugging"
+    ],
+    "file": "posts/day-07.md"
   }
 ]
