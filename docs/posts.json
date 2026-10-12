@@ -92,5 +92,19 @@
       "debugging"
     ],
     "file": "posts/day-07.md"
+  },
+  {
+    "day": 8,
+    "date": "2026-10-12",
+    "title": "Express.js, VaultLab's real API",
+    "summary": "Built VaultLab's real API with Express: REST routes with validation, a request logger, one error handler and a JSON 404, and connected the React app so items survive a reload. Then broke it in eight ways, and found out my firewall had been off the whole time.",
+    "tags": [
+      "express",
+      "nodejs",
+      "rest",
+      "api",
+      "security"
+    ],
+    "file": "posts/day-08.md"
   }
 ]
