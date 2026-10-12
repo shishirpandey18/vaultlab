@@ -1,8 +1,8 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// Where the API runs: the DevTools lab server on the Dell (Day 6)
-const API_URL = process.env.VAULTLAB_API || 'http://vaultlab.home:8080'
+// Where the API runs: the Express API on the Dell (Day 8)
+const API_URL = process.env.VAULTLAB_API || 'http://vaultlab.home:3000'
 
 export default defineConfig({
   plugins: [react()],

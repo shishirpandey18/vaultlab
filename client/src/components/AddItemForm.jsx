@@ -8,17 +8,21 @@ export default function AddItemForm({ onAdd }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault() // stop the browser from reloading the page
     if (!title.trim() || !password) {
       setError('Title and password are required.')
       return
     }
-    onAdd({ title: title.trim(), username: username.trim() || undefined, password })
-    setTitle('')
-    setUsername('')
-    setPassword('')
-    setError('')
+    try {
+      await onAdd({ title: title.trim(), username: username.trim() || undefined, password })
+      setTitle('')
+      setUsername('')
+      setPassword('')
+      setError('')
+    } catch (err) {
+      setError(`Could not save: ${err.message}`) // keep what was typed, so nothing is lost
+    }
   }
 
   return (
