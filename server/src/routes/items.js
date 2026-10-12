@@ -43,6 +43,12 @@ router.get('/', (req, res) => {
   res.json(store.listItems())
 })
 
+// GET /api/items/search?q=...: find items by title
+router.get('/search', (req, res) => {
+  const q = String(req.query.q || '').toLowerCase()
+  res.json(store.listItems().filter((item) => item.title.toLowerCase().includes(q)))
+})
+
 // GET /api/items/:id: one item
 router.get('/:id', (req, res) => {
   const id = parseId(req, res)
