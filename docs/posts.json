@@ -106,5 +106,19 @@
       "security"
     ],
     "file": "posts/day-08.md"
+  },
+  {
+    "day": 9,
+    "date": "2026-10-13",
+    "title": "Databases, VaultLab's items in MariaDB",
+    "summary": "Moved VaultLab's items into MariaDB with a least-privilege user, wrote SQL by hand and rolled back an UPDATE without WHERE, then ran an SQL injection against my own search and fixed it with parameterized queries.",
+    "tags": [
+      "database",
+      "sql",
+      "mariadb",
+      "security",
+      "linux"
+    ],
+    "file": "posts/day-09.md"
   }
 ]
