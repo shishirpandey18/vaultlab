@@ -39,38 +39,37 @@ function parseId(req, res) {
 }
 
 // GET /api/items: list all items
-router.get('/', (req, res) => {
-  res.json(store.listItems())
+router.get('/', async (req, res) => {
+  res.json(await store.listItems())
 })
 
-// GET /api/items/search?q=...: find items by title
-router.get('/search', (req, res) => {
-  const q = String(req.query.q || '').toLowerCase()
-  res.json(store.listItems().filter((item) => item.title.toLowerCase().includes(q)))
+// GET /api/items/search?q=...: find items by title (must come BEFORE /:id)
+router.get('/search', async (req, res) => {
+  res.json(await store.searchItems(String(req.query.q || '')))
 })
 
 // GET /api/items/:id: one item
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const id = parseId(req, res)
   if (id === null) return
-  const item = store.getItem(id)
+  const item = await store.getItem(id)
   if (!item) return res.status(404).json({ error: `Item ${id} not found` })
   res.json(item)
 })
 
 // POST /api/items: create an item
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const problems = validateItem(req.body)
   if (problems.length > 0) {
     return res.status(400).json({ error: 'Invalid item', details: problems })
   }
   const { title, username, password } = req.body
-  const item = store.createItem({ title: title.trim(), username: username?.trim() || undefined, password })
+  const item = await store.createItem({ title: title.trim(), username: username?.trim() || undefined, password })
   res.status(201).location(`/api/items/${item.id}`).json(item)
 })
 
 // PATCH /api/items/:id: change some fields of an item
-router.patch('/:id', (req, res) => {
+router.patch('/:id', async (req, res) => {
   const id = parseId(req, res)
   if (id === null) return
   const problems = validateItem(req.body, { partial: true })
@@ -80,18 +79,18 @@ router.patch('/:id', (req, res) => {
   const { title, username, password } = req.body
   const changes = {}
   if (title !== undefined) changes.title = title.trim()
-  if (username !== undefined) changes.username = username.trim() || undefined
+  if (username !== undefined) changes.username = username.trim() || null
   if (password !== undefined) changes.password = password
-  const item = store.updateItem(id, changes)
+  const item = await store.updateItem(id, changes)
   if (!item) return res.status(404).json({ error: `Item ${id} not found` })
   res.json(item)
 })
 
 // DELETE /api/items/:id: delete an item
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const id = parseId(req, res)
   if (id === null) return
-  if (!store.deleteItem(id)) return res.status(404).json({ error: `Item ${id} not found` })
+  if (!(await store.deleteItem(id))) return res.status(404).json({ error: `Item ${id} not found` })
   res.status(204).end()
 })
 

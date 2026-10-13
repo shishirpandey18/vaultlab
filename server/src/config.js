@@ -1,0 +1,21 @@
+// Reads settings from the environment (and from the .env file, if there is one)
+require('dotenv').config({ quiet: true })
+
+const REQUIRED = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME']
+const missing = REQUIRED.filter((name) => !process.env[name])
+if (missing.length > 0) {
+  console.error(`Missing settings: ${missing.join(', ')}. Copy .env.example to .env and fill it in.`)
+  process.exit(1)
+}
+
+module.exports = {
+  port: Number(process.env.PORT) || 3000,
+  host: process.env.HOST || '0.0.0.0',
+  db: {
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT) || 3306,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+  },
+}
