@@ -120,5 +120,19 @@
       "linux"
     ],
     "file": "posts/day-09.md"
+  },
+  {
+    "day": 10,
+    "date": "2026-10-14",
+    "title": "Authentication, hashing and sessions",
+    "summary": "Gave VaultLab user accounts: login passwords hashed with scrypt, sessions in HttpOnly cookies stored only as hashes, and a protected items API. Then attacked my own login to see why each protection exists, from timing leaks to a logout that didn't log out.",
+    "tags": [
+      "security",
+      "authentication",
+      "cryptography",
+      "express",
+      "react"
+    ],
+    "file": "posts/day-10.md"
   }
 ]
