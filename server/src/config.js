@@ -1,5 +1,8 @@
-// Reads settings from the environment (and from the .env file, if there is one)
-require('dotenv').config({ quiet: true })
+// Reads settings from the environment (and from server/.env, if there is one)
+const path = require('node:path')
+
+// Look for .env next to the code, not in whatever folder the server was started from
+require('dotenv').config({ path: path.join(__dirname, '..', '.env'), quiet: true })
 
 const REQUIRED = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME']
 const missing = REQUIRED.filter((name) => !process.env[name])

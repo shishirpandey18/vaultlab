@@ -1,20 +1,33 @@
 import { useEffect, useState } from 'react'
 import AddItemForm from './components/AddItemForm.jsx'
 import ItemList from './components/ItemList.jsx'
+import LoginForm from './components/LoginForm.jsx'
 import { api } from './lib/api.js'
 
 export default function App() {
+  const [user, setUser] = useState(undefined) // undefined = still checking, null = logged out
   const [items, setItems] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
 
-  // Runs after the first render: load the items from the API once
+  // On start: is there already a valid session cookie?
   useEffect(() => {
+    api('/auth/me')
+      .then(setUser)
+      .catch(() => setUser(null))
+  }, [])
+
+  // Whenever someone logs in: load their vault
+  useEffect(() => {
+    if (!user) return
     async function loadItems() {
+      setLoading(true)
+      setError('')
       try {
         setItems(await api('/items'))
       } catch (err) {
+        if (err.status === 401) return setUser(null) // session expired: back to the login form
         console.error('Could not load items:', err)
         setError(`Could not load your vault (${err.message}).`)
       } finally {
@@ -22,7 +35,13 @@ export default function App() {
       }
     }
     loadItems()
-  }, [])
+  }, [user])
+
+  async function logout() {
+    await api('/auth/logout', { method: 'POST' })
+    setItems([])
+    setUser(null)
+  }
 
   // Save on the server first, then show the item the server sent back
   async function addItem(newItem) {
@@ -40,9 +59,25 @@ export default function App() {
     }
   }
 
+  if (user === undefined) {
+    return <main className="app"><p className="muted">Checking your session...</p></main>
+  }
+
+  if (user === null) {
+    return (
+      <main className="app">
+        <h1>VaultLab</h1>
+        <LoginForm onLoggedIn={setUser} />
+      </main>
+    )
+  }
+
   return (
     <main className="app">
-      <h1>VaultLab</h1>
+      <div className="topbar">
+        <h1>VaultLab</h1>
+        <span className="muted">{user.email} <button onClick={logout}>Log out</button></span>
+      </div>
       <p className="muted">{items.length} items</p>
       <AddItemForm onAdd={addItem} />
       {notice && <p className="error">{notice}</p>}

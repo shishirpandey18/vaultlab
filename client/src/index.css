@@ -10,3 +10,7 @@ button { padding: 0.45rem 0.8rem; cursor: pointer; }
 .card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: #fff; border: 1px solid #e3e3e8; border-radius: 8px; padding: 0.7rem 0.9rem; }
 .secret { font-size: 0.9rem; }
 .actions { display: flex; gap: 0.3rem; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.login-form { display: grid; gap: 0.5rem; max-width: 360px; margin-top: 1rem; }
+.login-form input { padding: 0.5rem; }
+.login-form .link { background: none; border: none; color: #3b5bdb; padding: 0; text-align: left; }

@@ -8,12 +8,19 @@ export async function api(path, options = {}) {
 
   const type = res.headers.get('content-type') || ''
   if (!type.includes('application/json')) {
-    throw new Error(`${res.status} ${res.statusText}, ${type || 'no content type'}`)
+    throw apiError(res.status, `${res.status} ${res.statusText}, ${type || 'no content type'}`)
   }
   const body = await res.json()
   if (!res.ok) {
     // The API answers errors as { error, details? }
-    throw new Error(body.details ? body.details.join(', ') : body.error)
+    throw apiError(res.status, body.details ? body.details.join(', ') : body.error)
   }
   return body
+}
+
+// An Error that also remembers the HTTP status, so callers can react to 401
+function apiError(status, message) {
+  const err = new Error(message)
+  err.status = status
+  return err
 }
