@@ -134,5 +134,19 @@
       "react"
     ],
     "file": "posts/day-10.md"
+  },
+  {
+    "day": 11,
+    "date": "2026-10-15",
+    "title": "Authorization, every user sees only their own vault",
+    "summary": "Gave every vault item an owner, limited every query to the logged-in user, and added roles with an admin-only route. Then attacked my own API as a second user to see four classic authorization bugs: IDOR, 403 leaks, mass assignment and front-end-only checks.",
+    "tags": [
+      "security",
+      "authorization",
+      "mariadb",
+      "express",
+      "react"
+    ],
+    "file": "posts/day-11.md"
   }
 ]
