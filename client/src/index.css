@@ -14,3 +14,6 @@ button { padding: 0.45rem 0.8rem; cursor: pointer; }
 .login-form { display: grid; gap: 0.5rem; max-width: 360px; margin-top: 1rem; }
 .login-form input { padding: 0.5rem; }
 .login-form .link { background: none; border: none; color: #3b5bdb; padding: 0; text-align: left; }
+.admin { margin-top: 2rem; }
+.admin table { border-collapse: collapse; width: 100%; background: #fff; }
+.admin th, .admin td { border: 1px solid #e3e3e8; padding: 0.4rem 0.6rem; text-align: left; }

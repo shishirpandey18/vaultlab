@@ -5,6 +5,8 @@ const itemsRouter = require('./routes/items')
 const pool = require('./db')
 const authRouter = require('./routes/auth')
 const requireAuth = require('./middleware/requireAuth')
+const requireRole = require('./middleware/requireRole')
+const adminRouter = require('./routes/admin')
 
 const app = express()
 
@@ -34,6 +36,7 @@ app.get('/api/health', async (req, res) => {
 })
 app.use('/api/auth', authRouter)
 app.use('/api/items', requireAuth, itemsRouter) // every items route needs a login
+app.use('/api/admin', requireAuth, requireRole('admin'), adminRouter) // and these need an admin
 
 // Nothing matched, or something failed: these two must come LAST
 app.use(notFound)

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import AddItemForm from './components/AddItemForm.jsx'
 import ItemList from './components/ItemList.jsx'
 import LoginForm from './components/LoginForm.jsx'
+import AdminPanel from './components/AdminPanel.jsx'
 import { api } from './lib/api.js'
 
 export default function App() {
@@ -76,7 +77,9 @@ export default function App() {
     <main className="app">
       <div className="topbar">
         <h1>VaultLab</h1>
-        <span className="muted">{user.email} <button onClick={logout}>Log out</button></span>
+        <span className="muted">
+          {user.email} {user.role === 'admin' && <strong>(admin)</strong>} <button onClick={logout}>Log out</button>
+        </span>
       </div>
       <p className="muted">{items.length} items</p>
       <AddItemForm onAdd={addItem} />
@@ -84,6 +87,7 @@ export default function App() {
       {loading && <p>Loading your vault...</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && <ItemList items={items} onDelete={deleteItem} />}
+      {user.role === 'admin' && <AdminPanel />}
     </main>
   )
 }
