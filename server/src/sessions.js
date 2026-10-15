@@ -19,7 +19,7 @@ async function createSession(userId) {
 // The user behind a token, or undefined if the token is unknown or expired
 async function findSessionUser(token) {
   const [rows] = await pool.execute(
-    `SELECT users.id, users.email FROM sessions
+    `SELECT users.id, users.email, users.role FROM sessions
        JOIN users ON users.id = sessions.user_id
       WHERE sessions.token_hash = ? AND sessions.expires_at > NOW()`,
     [sha256(token)],

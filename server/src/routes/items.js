@@ -40,19 +40,19 @@ function parseId(req, res) {
 
 // GET /api/items: list all items
 router.get('/', async (req, res) => {
-  res.json(await store.listItems())
+  res.json(await store.listItems(req.user.id))
 })
 
 // GET /api/items/search?q=...: find items by title (must come BEFORE /:id)
 router.get('/search', async (req, res) => {
-  res.json(await store.searchItems(String(req.query.q || '')))
+  res.json(await store.searchItems(req.user.id, String(req.query.q || '')))
 })
 
 // GET /api/items/:id: one item
 router.get('/:id', async (req, res) => {
   const id = parseId(req, res)
   if (id === null) return
-  const item = await store.getItem(id)
+  const item = await store.getItem(req.user.id, id)
   if (!item) return res.status(404).json({ error: `Item ${id} not found` })
   res.json(item)
 })
@@ -64,7 +64,7 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Invalid item', details: problems })
   }
   const { title, username, password } = req.body
-  const item = await store.createItem({ title: title.trim(), username: username?.trim() || undefined, password })
+  const item = await store.createItem(req.user.id, { title: title.trim(), username: username?.trim() || undefined, password })
   res.status(201).location(`/api/items/${item.id}`).json(item)
 })
 
@@ -81,7 +81,7 @@ router.patch('/:id', async (req, res) => {
   if (title !== undefined) changes.title = title.trim()
   if (username !== undefined) changes.username = username.trim() || null
   if (password !== undefined) changes.password = password
-  const item = await store.updateItem(id, changes)
+  const item = await store.updateItem(req.user.id, id, changes)
   if (!item) return res.status(404).json({ error: `Item ${id} not found` })
   res.json(item)
 })
@@ -90,7 +90,7 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const id = parseId(req, res)
   if (id === null) return
-  if (!(await store.deleteItem(id))) return res.status(404).json({ error: `Item ${id} not found` })
+  if (!(await store.deleteItem(req.user.id, id))) return res.status(404).json({ error: `Item ${id} not found` })
   res.status(204).end()
 })
 

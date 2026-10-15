@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
     return res.status(429).json({ error: 'Too many failed attempts. Try again later.' })
   }
 
-  const [rows] = await pool.execute('SELECT id, email, password_hash FROM users WHERE email = ?', [email])
+  const [rows] = await pool.execute('SELECT id, email, role, password_hash FROM users WHERE email = ?', [email])
   const user = rows[0]
   // Always run ONE password check, even for an unknown email
   const ok = await verifyPassword(password, user ? user.password_hash : await dummyHash)
@@ -84,7 +84,7 @@ router.post('/login', async (req, res) => {
   const token = await sessions.createSession(user.id)
   res.cookie(sessions.COOKIE_NAME, token, sessions.cookieOptions)
   console.log(`[auth] user ${user.id} logged in from ${req.ip}`)
-  res.json({ id: user.id, email: user.email })
+  res.json({ id: user.id, email: user.email, role: user.role })
 })
 
 // POST /api/auth/logout: end the session on the server AND remove the cookie
