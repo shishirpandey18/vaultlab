@@ -148,5 +148,19 @@
       "react"
     ],
     "file": "posts/day-11.md"
+  },
+  {
+    "day": 12,
+    "date": "2026-10-16",
+    "title": "Encryption, vault passwords you can read back but nobody else can",
+    "summary": "Encrypted every vault password with AES-256-GCM, migrated the real data in three steps, and made the server refuse to start with a key that doesn't open the vault. Then broke my own encryption five ways: wrong key, a skipped check, a changed value, a copied value and a reused IV.",
+    "tags": [
+      "security",
+      "cryptography",
+      "encryption",
+      "mariadb",
+      "express"
+    ],
+    "file": "posts/day-12.md"
   }
 ]
