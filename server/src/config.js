@@ -4,10 +4,17 @@ const path = require('node:path')
 // Look for .env next to the code, not in whatever folder the server was started from
 require('dotenv').config({ path: path.join(__dirname, '..', '.env'), quiet: true })
 
-const REQUIRED = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME']
+const REQUIRED = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'VAULT_KEY']
 const missing = REQUIRED.filter((name) => !process.env[name])
 if (missing.length > 0) {
   console.error(`Missing settings: ${missing.join(', ')}. Copy .env.example to .env and fill it in.`)
+  process.exit(1)
+}
+
+// The vault key must be exactly 32 bytes, written as 64 hex characters
+if (!/^[0-9a-f]{64}$/i.test(process.env.VAULT_KEY)) {
+  console.error('VAULT_KEY must be 64 hex characters (32 bytes). Make one with:')
+  console.error(`  node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"`)
   process.exit(1)
 }
 
@@ -21,4 +28,5 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
   },
+  vaultKey: process.env.VAULT_KEY,
 }
