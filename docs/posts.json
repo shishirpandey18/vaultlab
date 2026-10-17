@@ -162,5 +162,19 @@
       "express"
     ],
     "file": "posts/day-12.md"
+  },
+  {
+    "day": 13,
+    "date": "2026-10-17",
+    "title": "HTTPS and TLS, with nginx and my own CA",
+    "summary": "Watched my own login cross the network in plain text, then put nginx in front with HTTPS, a certificate from my own small CA with a name constraint, HSTS and the API on loopback. Then broke it seven ways, from an untrusted CA and an expired certificate to a 502 and a trust proxy setting that lets attackers forge their address.",
+    "tags": [
+      "security",
+      "tls",
+      "https",
+      "nginx",
+      "networking"
+    ],
+    "file": "posts/day-13.md"
   }
 ]
