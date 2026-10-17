@@ -44,7 +44,7 @@ function readCookie(req, name) {
 const cookieOptions = {
   httpOnly: true, // JavaScript in the page can't read it
   sameSite: 'lax', // not sent with requests that other websites start
-  secure: false, // TODO: true once VaultLab runs on HTTPS
+  secure: true, // only ever sent over HTTPS (Day 13)
   path: '/',
   maxAge: SESSION_HOURS * 60 * 60 * 1000,
 }

@@ -12,6 +12,10 @@ const app = express()
 
 app.disable('x-powered-by') // don't advertise "Express" in every response
 
+// nginx, on this same machine, passes requests on (Day 13). Trust the X-Forwarded-* headers
+// ONLY from it: then req.ip is the real client, and req.secure says whether it came in over HTTPS.
+app.set('trust proxy', 'loopback')
+
 // Middleware runs in this order, for every request
 app.use(logger)
 app.use(express.json({ limit: '10kb' })) // read JSON bodies into req.body
