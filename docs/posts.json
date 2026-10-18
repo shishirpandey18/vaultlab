@@ -176,5 +176,18 @@
       "networking"
     ],
     "file": "posts/day-13.md"
+  },
+  {
+    "day": 14,
+    "date": "2026-10-18",
+    "title": "VaultLab as a systemd service",
+    "summary": "Turned the API from a terminal tab into a hardened systemd service with its own user and a root-only secrets file, then broke it eight ways and learned to read crashes, crash loops and start failures from systemctl and journalctl.",
+    "tags": [
+      "linux",
+      "systemd",
+      "security",
+      "troubleshooting"
+    ],
+    "file": "posts/day-14.md"
   }
 ]
