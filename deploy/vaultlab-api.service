@@ -1,0 +1,53 @@
+# VaultLab API as a systemd service (Day 14)
+# Installed as /etc/systemd/system/vaultlab-api.service
+
+[Unit]
+Description=VaultLab API (Node.js)
+Documentation=https://github.com/shishirpandey18/vaultlab
+# Start after the network and the database are up
+After=network.target mariadb.service
+Wants=mariadb.service
+# If it fails to start more than 5 times in 60 seconds, give up and say so (no endless crash loop)
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=vaultlab
+Group=vaultlab
+WorkingDirectory=/opt/vaultlab/server
+# Settings and secrets: readable by root only. systemd reads the file, then starts Node as vaultlab
+EnvironmentFile=/etc/vaultlab/api.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node src/index.js
+
+# Crashed? Start it again after 2 seconds. Stopped on purpose? Leave it stopped.
+Restart=on-failure
+RestartSec=2
+
+# Hardening: what this process may NOT do, even if someone takes it over
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+ProtectClock=true
+ProtectKernelLogs=true
+ProtectHostname=true
+ProtectProc=invisible
+RestrictNamespaces=true
+RestrictRealtime=true
+RemoveIPC=true
+SystemCallArchitectures=native
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+UMask=0077
+# Not MemoryDenyWriteExecute=true: Node's JavaScript engine compiles code at run time and needs it
+
+[Install]
+WantedBy=multi-user.target
