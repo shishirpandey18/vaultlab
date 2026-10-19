@@ -1,0 +1,39 @@
+# VaultLab encrypted database backup (Day 15). Started by vaultlab-backup.timer.
+# Installed as /etc/systemd/system/vaultlab-backup.service
+
+[Unit]
+Description=VaultLab database backup (encrypted)
+After=mariadb.service
+Wants=mariadb.service
+
+[Service]
+Type=oneshot
+User=vaultlab-backup
+Group=vaultlab-backup
+ExecStart=/usr/local/sbin/vaultlab-backup
+
+# Hardening: it may read the database through MariaDB's local socket and write to its backup folder. Nothing else.
+ProtectSystem=strict
+ReadWritePaths=/var/backups/vaultlab
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+PrivateNetwork=true
+NoNewPrivileges=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+RemoveIPC=true
+UMask=0077

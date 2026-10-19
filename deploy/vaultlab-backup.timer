@@ -1,0 +1,15 @@
+# Runs vaultlab-backup.service every night (Day 15)
+# Installed as /etc/systemd/system/vaultlab-backup.timer
+
+[Unit]
+Description=Nightly VaultLab backup
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+# Not exactly at 03:30 every night: somewhere in the following 15 minutes
+RandomizedDelaySec=15min
+# The Dell was off at 03:30? Run it at the next boot instead of skipping the night
+Persistent=true
+
+[Install]
+WantedBy=timers.target
