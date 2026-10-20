@@ -189,5 +189,19 @@
       "troubleshooting"
     ],
     "file": "posts/day-14.md"
+  },
+  {
+    "day": 15,
+    "date": "2026-10-20",
+    "title": "Encrypted backups and a restore drill",
+    "summary": "Made backups automatic with a systemd timer, encrypted them to a public key whose private half isn't on the server, and made them with a read-only user. Then restored one into a separate database, lost my own private key by mistake, and broke the job six ways, including two backups that report success and contain nothing.",
+    "tags": [
+      "security",
+      "backups",
+      "gpg",
+      "systemd",
+      "troubleshooting"
+    ],
+    "file": "posts/day-15.md"
   }
 ]
