@@ -1,0 +1,13 @@
+# Runs vaultlab-check.service every 5 minutes (Day 16)
+# Installed as /etc/systemd/system/vaultlab-check.timer
+
+[Unit]
+Description=VaultLab health check every 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target

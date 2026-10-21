@@ -1,0 +1,42 @@
+# VaultLab health check (Day 16). Started every 5 minutes by vaultlab-check.timer.
+# Installed as /etc/systemd/system/vaultlab-check.service
+
+[Unit]
+Description=VaultLab health check
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/vaultlab-check
+# A dedicated system user that owns nothing except its state folder.
+# Create once: sudo useradd --system --no-create-home --shell /usr/sbin/nologin vaultlab-check
+# (DynamicUser=true was tried first, but on this machine it made systemctl fail with
+#  "Transport endpoint is not connected", so every systemd-based check broke.)
+User=vaultlab-check
+StateDirectory=vaultlab-check
+# Optional: NTFY_URL=... for phone notifications. The "-" means: fine if the file doesn't exist
+EnvironmentFile=-/etc/vaultlab/monitor.env
+
+# Hardening: it only needs to make network requests and ask systemd questions
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+NoNewPrivileges=true
+CapabilityBoundingSet=
+# AF_NETLINK: the C library uses it to look up names (getaddrinfo)
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=true
+RestrictRealtime=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+UMask=0077
