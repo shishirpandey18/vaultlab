@@ -203,5 +203,18 @@
       "troubleshooting"
     ],
     "file": "posts/day-15.md"
+  },
+  {
+    "day": 16,
+    "date": "2026-10-21",
+    "title": "Monitoring and alerts",
+    "summary": "Added a check that runs every 5 minutes and looks at VaultLab from the outside in: health, certificate, services, backup, disk and failed units. It notifies only when the state changes. Then I broke it five ways, found that DynamicUser= breaks systemctl inside the service on this machine, and noted what a check on the same machine can't see.",
+    "tags": [
+      "monitoring",
+      "systemd",
+      "alerts",
+      "troubleshooting"
+    ],
+    "file": "posts/day-16.md"
   }
 ]
