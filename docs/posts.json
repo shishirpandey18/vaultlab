@@ -216,5 +216,19 @@
       "troubleshooting"
     ],
     "file": "posts/day-16.md"
+  },
+  {
+    "day": 17,
+    "date": "2026-10-22",
+    "title": "Off-site backups over restricted SSH",
+    "summary": "Made the encrypted backups readable by one group, created a puller user whose key can only run read-only rsync of the backup folder, and pulled the copies to the Mac with launchd. Checked the limits with six blocked attempts (and found two that only looked like proofs, one caused by zsh not splitting a variable), then forgot the backup key's passphrase, made a new key, and opened the off-site copy on the Mac with it. Break 1 (an overwritten backup) is recorded; breaks 2 to 4 are not.",
+    "tags": [
+      "backups",
+      "ssh",
+      "rsync",
+      "launchd",
+      "troubleshooting"
+    ],
+    "file": "posts/day-17.md"
   }
 ]
