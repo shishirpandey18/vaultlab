@@ -36,4 +36,4 @@ LockPersonality=true
 MemoryDenyWriteExecute=true
 SystemCallArchitectures=native
 RemoveIPC=true
-UMask=0077
+UMask=0027

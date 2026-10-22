@@ -3,7 +3,7 @@
 # and keep only the newest $KEEP backups. Runs as the vaultlab-backup user (systemd timer).
 # The server can make backups but can't read them: the private key isn't on it.
 set -euo pipefail
-umask 077
+umask 027   # Day 17: files are 640, readable by the vaultlab-backup group (the off-site puller)
 
 BACKUP_DIR=/var/backups/vaultlab
 PUBKEY=/etc/vaultlab/backup-pub.asc
