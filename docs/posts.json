@@ -230,5 +230,18 @@
       "troubleshooting"
     ],
     "file": "posts/day-17.md"
+  },
+  {
+    "day": 18,
+    "date": "2026-10-23",
+    "title": "Review day, incident drills and explaining it well",
+    "summary": "Wrote a one-page troubleshooting runbook and worked five drill tickets: a stopped database twice, an emptied sessions table twice, and an API listening on the wrong address. The runbook's order, the evidence behind each cause, a question index for the whole blog and what is still not done (the gap audit and the drills alone).",
+    "tags": [
+      "troubleshooting",
+      "runbook",
+      "incident-response",
+      "review"
+    ],
+    "file": "posts/day-18.md"
   }
 ]
