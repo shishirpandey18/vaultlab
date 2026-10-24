@@ -243,5 +243,19 @@
       "review"
     ],
     "file": "posts/day-18.md"
+  },
+  {
+    "day": 19,
+    "date": "2026-10-24",
+    "title": "Installing Passbolt CE in a container on the Dell",
+    "summary": "Installed Passbolt Community Edition in an LXD container next to VaultLab, with a certificate from my own CA, an installer I had to redo after wrong answers, and a mail catcher. Then read its health check and logs, created a second user, and showed in the database that one shared password is two different encrypted messages. Several problems along the way: MySQL instead of MariaDB, a HEAD 404, Python buffering, an SMTP TLS mismatch.",
+    "tags": [
+      "passbolt",
+      "lxd",
+      "tls",
+      "openpgp",
+      "troubleshooting"
+    ],
+    "file": "posts/day-19.md"
   }
 ]
