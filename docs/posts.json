@@ -257,5 +257,18 @@
       "troubleshooting"
     ],
     "file": "posts/day-19.md"
+  },
+  {
+    "day": 20,
+    "date": "2026-10-25",
+    "title": "Passbolt support tickets: break it, diagnose it, answer the user",
+    "summary": "Worked seven Passbolt tickets: emails that never arrive from two opposite causes (a missing mail server and a stopped scheduler), a 502 from PHP-FPM, a 500 from a stopped database, a server key file that turned the health check red while logins kept working, a base URL without its port, and a certificate warning with two different causes (IP versus a CA the browser doesn't know). Plus two paper tickets. Ticket 3 (recovery) is not done.",
+    "tags": [
+      "passbolt",
+      "troubleshooting",
+      "support",
+      "incident-response"
+    ],
+    "file": "posts/day-20.md"
   }
 ]
