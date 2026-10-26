@@ -270,5 +270,19 @@
       "incident-response"
     ],
     "file": "posts/day-20.md"
+  },
+  {
+    "day": 21,
+    "date": "2026-10-26",
+    "title": "Break VaultLab with XSS, then shut it down with CSP and headers",
+    "summary": "Added one deliberate bug (dangerouslySetInnerHTML) in a build kept outside the repo, watched a stored XSS payload run and read the whole decrypted vault even though the session cookie was httpOnly, then blocked it with a strict Content-Security-Policy and security headers in nginx. Along the way: a reload that looked like it had not applied, and the nginx add_header inheritance trap that silently removed the CSP from the app page.",
+    "tags": [
+      "xss",
+      "csp",
+      "nginx",
+      "security",
+      "troubleshooting"
+    ],
+    "file": "posts/day-21.md"
   }
 ]
