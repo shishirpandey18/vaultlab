@@ -284,5 +284,20 @@
       "troubleshooting"
     ],
     "file": "posts/day-21.md"
+  },
+  {
+    "day": 22,
+    "date": "2026-10-28",
+    "title": "Ports, firewalls, and reading the wire on my home lab",
+    "summary": "Found what listens on the Dell and which process owns each port, probed it from a container and told open from closed from filtered by exit code and clock, then proved ufw reject against deny with a listener that never stopped and watched all three states as packets in tcpdump. Plus the surprises: dig and /etc/hosts, a container told that vaultlab.home is itself, and a tcpdump that no signal could stop. Worked in two parts (Oct 27 and Oct 28).",
+    "tags": [
+      "networking",
+      "firewall",
+      "ports",
+      "dns",
+      "tcpdump",
+      "troubleshooting"
+    ],
+    "file": "posts/day-22.md"
   }
 ]
