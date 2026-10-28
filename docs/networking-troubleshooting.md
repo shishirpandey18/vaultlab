@@ -1,8 +1,8 @@
-# Network troubleshooting: ports, listening sockets, DNS (Day 22, part 1)
+# Network troubleshooting: ports, firewall, DNS and the wire (Day 22)
 
 Written from a home lab: the Dell is the server, a Passbolt LXD container on the Dell's own bridge is the client
 (its own network namespace, so it reaches the Dell like another machine). The firewall, packet-capture and `nmap`
-parts come next (part 2). All outputs are real; public addresses are left out.
+parts are further down. All outputs are real; public addresses are left out.
 
 ## What a port is
 
@@ -60,7 +60,7 @@ curl: (7) Failed to connect to 10.157.83.1 port 9999 after 0 ms: Couldn't connec
 
 Port 3000 is the instructive one: a service **is** running, and from the network it looks exactly like an empty port,
 because it is bound to loopback. That is on purpose: only nginx, on the same machine, can reach the API. A "filtered"
-port needs a firewall rule that drops traffic; that experiment is in part 2.
+port needs a firewall rule that drops traffic; that's the next section.
 
 ## DNS: how a name becomes an address
 
@@ -89,9 +89,103 @@ Failure looks different at each layer, and the message names the layer:
 | `getent` prints nothing, exit 2; `dig` `status: NXDOMAIN` | the name doesn't exist | `nonexistent.invalid` |
 | `curl: (6) Could not resolve host` | DNS: it never tried to connect | `nonexistent.invalid` |
 | `curl: (7) Failed to connect ... Couldn't connect to server` | reached the host; nothing listens (refused) | port 9999 |
-| `curl: (28) Connection timed out` | reached nothing: usually a firewall drop, or a dead host | (part 2) |
+| `curl: (28) Connection timed out` | reached nothing: usually a firewall drop, or a dead host | a `ufw deny` rule |
 
 A test name must really not exist: `bad.name` turned out to be a real domain. The reserved `.invalid` top level never resolves.
+
+## The firewall decides closed against filtered
+
+`ufw` is a front end over the kernel's netfilter. The choice between two rules is the choice between two symptoms:
+
+- `ufw reject`: sends an answer back (RST). The port looks **closed**: "connection refused", instantly.
+- `ufw deny`: drops the packet silently. The port looks **filtered**: the client waits, then times out.
+
+I tested both on a spare port with a real listener that never stopped running, probing from the container:
+
+| State of port 18081 | `nc -z -w4` | `curl` says |
+| --- | --- | --- |
+| open | exit 0 in 0.01 s | `200` |
+| `ufw reject` | exit 1 in 0.01 s | `(7) Couldn't connect` |
+| `ufw deny` | exit 1 in **4.01 s** | `(28) Connection timed out after 5002 ms` |
+| rule removed | exit 0 in 0.00 s | `200` |
+
+The listener was running the whole time, so the firewall alone made the difference. "Why does it hang" against "why does it
+refuse instantly" is a DROP rule somewhere. Safe handling: allow SSH before enabling a firewall, test changes from a second
+machine, **insert** a test rule at the top and delete it with the same text (`ufw --force delete deny in on lxdbr0 to any
+port 18081 proto tcp`), and use a spare port: `ufw` here already had its own rules, so I never ran a blanket `enable` or reset.
+A rule on the bridge interface only affects traffic arriving there: traffic from a machine to its own address goes over the
+loopback interface, which `ufw` always allows, so a "drop" can't be tested that way.
+
+## nmap says it in words
+
+`nmap -Pn -p ports host` labels each port, from the Dell against the container:
+
+```text
+22/tcp    open     ssh
+80/tcp    open     http
+443/tcp   open     https
+18083/tcp open     unknown      (a throwaway listener)
+18084/tcp closed   unknown      (nothing there)
+-- after a ufw deny OUT rule for 18083:
+18083/tcp filtered unknown      (the same listener, now dropped)
+18084/tcp closed   unknown      (unchanged: refused, not dropped)
+```
+
+Only scan machines you own. On a home lab that's exactly what it's for.
+
+## On the wire: `tcpdump`
+
+`tcpdump -nn` prints packets (`-nn`: no name lookups). Three captures, one per state.
+
+**Open: the three-way handshake**, then data (loopback, port 18081):
+
+```text
+127.0.0.1.33106 > 127.0.0.1.18081: Flags [S],  seq 2604812336                  SYN       "let's talk"
+127.0.0.1.18081 > 127.0.0.1.33106: Flags [S.], seq 884213488, ack 2604812337   SYN-ACK   "ok, and let's talk"
+127.0.0.1.33106 > 127.0.0.1.18081: Flags [.],  ack 1                           ACK       "agreed"
+127.0.0.1.33106 > 127.0.0.1.18081: Flags [P.], length 78                       the HTTP request
+127.0.0.1.18081 > 127.0.0.1.33106: Flags [P.], length 156 and 3530             the response
+127.0.0.1.18081 > 127.0.0.1.33106: Flags [F.]  ...                             the server closes (FIN), the client answers
+```
+
+**Closed: SYN, then RST straight back** (that `[R.]` is "connection refused" at the packet level):
+
+```text
+127.0.0.1.36118 > 127.0.0.1.18082: Flags [S]
+127.0.0.1.18082 > 127.0.0.1.36118: Flags [R.]
+```
+
+**Filtered: the same SYN, again and again, never answered** (on the bridge, with a `ufw deny` rule):
+
+```text
+10.157.83.205.47980 > 10.157.83.1.18081: Flags [S], seq 3382974915
+10.157.83.205.47980 > 10.157.83.1.18081: Flags [S], seq 3382974915   (+1.05 s)
+10.157.83.205.47980 > 10.157.83.1.18081: Flags [S], seq 3382974915   (+1.02 s)
+```
+
+"SYN with no reply" against "SYN then RST" tells you firewall drop against nothing listening, without touching the server.
+Note: `tcpdump` sees the packets before the firewall drops them, which is why the dropped SYNs still appear.
+
+**Pitfalls I hit:** a script that put `tcpdump` in the background under `sudo timeout` produced empty captures, and the
+`tcpdump` kept running long after the timeout; even `sudo pkill` said `Permission denied`. The process ran under an enforcing
+AppArmor profile (`/proc/<pid>/attr/current` said `tcpdump (enforce)`), which is consistent with signals being refused, but
+I haven't proved that. What worked: let `tcpdump` stop itself with `-c N`, and capture in the foreground.
+
+## The ladder: "the app isn't reachable"
+
+Climb from the client and stop at the first rung that fails.
+
+| # | Question | Command (from the client) | If it fails, the problem is |
+| --- | --- | --- | --- |
+| 1 | Does the name resolve? | `getent hosts NAME` | DNS or `/etc/hosts` (`curl: (6)`) |
+| 2 | Is the host up? | `ping HOST` | network, wrong IP, machine down |
+| 3 | Is the port reachable? | `nc -z -w2 HOST PORT; echo $?` | **refused (instant)** = nothing listening; **timeout (slow)** = a firewall drop |
+| 4 | (refused) Is it listening? | on the server: `sudo ss -tlnp \| grep PORT` | service down, or bound to `127.0.0.1` |
+| 5 | (timeout) Is the firewall dropping it? | on the server: `sudo ufw status` | a `deny` rule, or a dead host |
+| 6 | Does the app answer? | `curl -v https://NAME/` | TLS error, 502 (backend down), 500 (app error) |
+| 7 | (502/500) Is the backend alive? | on the server: the health endpoint and logs | the API or the database |
+
+The clock is the tell at rung 3: refused is instant, filtered is slow.
 
 ## One-liners
 
